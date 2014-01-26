@@ -16,7 +16,8 @@
                      (dom/h2 nil "Filtered Table")
                      (om/build filtered-table app
                                {:init-state
-                                {:rows (mapv #(hash-map :name (str %))(range 0 100))}})))) )
+                                {:rows (mapv #(hash-map :id % :name (str "Name " (inc %)))
+                                             (range 0 100))}})))) )
 
 (om/root
   app-state

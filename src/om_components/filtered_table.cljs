@@ -8,7 +8,8 @@
 (defn filter-rows [rows query]
   (if query
     (filter
-     #(-> (:name %) (.indexOf query) (> -1))
+     (fn [row] (some #(-> (str %)(.indexOf query) (> -1))
+                     (vals row)))
      rows)
     rows))
 
