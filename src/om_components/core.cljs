@@ -1,7 +1,7 @@
 (ns om-components.core
   (:require [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
-            [om-components.filtered-table :refer [filtered-list]]))
+            [om-components.filtered-table :refer [filtered-table]]))
 
 (enable-console-print!)
 
@@ -13,8 +13,8 @@
     om/IRender
     (render [_]
             (dom/div nil
-                     (dom/h2 nil "Filtered!")
-                     (om/build filtered-list app
+                     (dom/h2 nil "Filtered Table")
+                     (om/build filtered-table app
                                {:init-state
                                 {:rows (mapv #(hash-map :name (str %))(range 0 100))}})))) )
 
