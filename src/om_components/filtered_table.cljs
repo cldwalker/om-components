@@ -13,12 +13,12 @@
      rows)
     rows))
 
-(defn render-table [rows]
+(defn render-table [rows & {:keys [table-attributes]}]
   (let [fields (distinct (mapcat keys rows))
         headers (map (comp string/capitalize name) fields)
         rows (mapv (apply juxt fields) rows)]
     (dom/table
-     #js {:className "table table-striped"}
+     (clj->js table-attributes)
      (dom/thead
       nil
       (apply dom/tr nil
@@ -51,4 +51,6 @@
                                               (.. e -target -value)))})
 
              (let [rows (om/get-state owner :rows)]
-               (render-table (filter-rows rows (om/get-state owner :query))))))))
+               (render-table
+                (filter-rows rows (om/get-state owner :query))
+                :table-attributes (om/get-state owner :table-attributes)))))))
