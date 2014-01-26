@@ -4,8 +4,6 @@
             [om.dom :as dom :include-macros true]))
 
 
-(def app-state (atom {}))
-
 (defn item [app owner]
   (reify
     om/IRender
@@ -43,19 +41,3 @@
                      (filter-rows
                       (om/to-cursor (om/get-state owner :rows))
                       (om/get-state owner :query))))))))
-
-(defn root []
-  (om/root
-   app-state
-   (fn [app owner]
-     (reify
-       om/IRender
-       (render [_]
-               (dom/div nil
-                        (dom/h1 nil "Filtered!")
-                        (om/build filtered-list app
-                                  {:init-state
-                                   {:rows (mapv #(hash-map :name (str %))(range 0 100))}})))))
-   (.getElementById js/document "filtered_table")))
-
-(root)
